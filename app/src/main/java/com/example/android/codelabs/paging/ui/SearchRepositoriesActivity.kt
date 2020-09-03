@@ -39,6 +39,20 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+/**
+ * Wrap up
+ *
+ * Now that we have added all the components, let's recap what we've learned!
+ *
+ * - The PagingSource asynchronously loads the data from a source you define.
+ * - The Pager.flow creates a Flow<PagingData> based on a configuration and a function that defineshow to instantiate the PagingSource.
+ * - The Flow emits a new PagingData whenever new data is loaded by the PagingSource.
+ * - The UI observes the changed PagingData and uses a PagingDataAdapter to update the RecyclerView that presents the data.
+ * - To retry a failed load from the UI, use the PagingDataAdapter.retry method. Under the hood, the Paging library will trigger the PagingSource.load() method.
+ * - To add separators to your list, create a high-level type with separators as one of the supported types. Then use the PagingData.insertSeparators() method to implement your separator generation logic.
+ * - To display the load state as header or footer, use PagingDataAdapter.withLoadStateHeaderAndFooter() method and implement a LoadStateAdapter. If you want to execute other actions based on the load state, use the PagingDataAdapter.addLoadStateListener() callback.
+ * - To work with the network and database, implement a RemoteMediator.
+ */
 @ExperimentalCoroutinesApi
 class SearchRepositoriesActivity : AppCompatActivity() {
 
@@ -69,7 +83,7 @@ class SearchRepositoriesActivity : AppCompatActivity() {
         setContentView(view)
 
         // get the view model
-        viewModel = ViewModelProvider(this, Injection.provideViewModelFactory())
+        viewModel = ViewModelProvider(this, Injection.provideViewModelFactory(this))
                 .get(SearchRepositoriesViewModel::class.java)
 
         // add dividers between RecyclerView's row items
